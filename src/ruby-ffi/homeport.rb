@@ -19,7 +19,7 @@ module Homeport
 	end
 
 	HPD_NON_SECURE_DEVICE = 0
-    HPD_SECURE_DEVICE = 1
+	HPD_SECURE_DEVICE = 1
 
 	attach_function 'HPD_start', [:uint, :string, :varargs], :int
 	attach_function 'HPD_stop', [], :int
@@ -34,5 +34,4 @@ module Homeport
 	attach_function 'HPD_register_device_services', [ :pointer ], :int
 	attach_function 'HPD_unregister_device_services', [ :pointer ], :int
 	attach_function 'HPD_send_event_of_value_change',  [ :pointer, :string ], :int
-
 end
