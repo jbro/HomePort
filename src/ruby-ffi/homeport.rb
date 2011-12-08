@@ -21,13 +21,19 @@ module Homeport
 	HPD_NON_SECURE_DEVICE = 0
 	HPD_SECURE_DEVICE = 1
 
-	attach_function 'HPD_start', [:uint, :string, :varargs], :int
+	callback :HPD_GetFunction, [ :pointer, :pointer, :size_t ], :size_t
+	callback :HPD_PutFunction, [ :pointer, :buffer_out, :size_t, :buffer_in ], :size_t
+
+	attach_function 'HPD_start', [:uint, :string, :varargs ], :int
 	attach_function 'HPD_stop', [], :int
 
-	attach_function 'create_device_struct', [:string, :string, :string, :string, :string, :string, :string, :string, :string, :int], :pointer 
+	attach_function 'create_device_struct', [:string, :string, :string, :string, :string, :string, :string, :string, :string, :int ], :pointer 
 	attach_function 'destroy_device_struct', [ :pointer ], :int
-	attach_function 'create_service_struct', [ :string, :string, :string, :string, :pointer, :pointer, :pointer, :pointer], :pointer 
+	attach_function 'create_service_struct', [ :string, :string, :string, :string, :pointer, :HPD_GetFunction, :HPD_PutFunction, :pointer, :pointer ], :pointer 
 	attach_function 'destroy_service_struct', [ :pointer ], :int
+
+	attach_function 'create_parameter_struct', [ :string, :string, :string, :string, :string, :string, :string, :string ], :pointer 
+	attach_function 'free_parameter_struct', [ :pointer ], :void
 
 	attach_function 'HPD_register_service', [ :pointer ], :int
 	attach_function 'HPD_unregister_service', [ :pointer ], :int
